@@ -5,6 +5,12 @@ import bcrypt from 'bcrypt'
 
 export const SignUp = async (req, res, next) => {
     try {
+
+        if (req.session && req.session.userId) {
+            const { userId } = req.session
+            const user = await userModel.findById(userId)
+            return res.redirect("home")
+        }
         const { error } = req.query
         return res.render("signUp", { error })
     } catch (error) {
@@ -145,7 +151,7 @@ export const logOut = async (req, res, next) => {
     try {
 
         req.session.destroy((err) => {
-            res.clearCookie("connect.sid"); 
+            res.clearCookie("connect.sid");
         });
         return res.render("login", { error: "Logged out successfully" });
 
