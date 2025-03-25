@@ -6,7 +6,6 @@ import messageModel from "../../../db/models/message.model.js";
 
 export const message = async (req, res, next) => {
     try {
-
         const { userId } = req.params
         const userExists = await userModel.findById(userId);
         if (!userExists) {

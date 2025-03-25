@@ -18,8 +18,16 @@ userRouter.post('/login',
     validate(UV.loginValidation),
     UC.handleLogin)
 
-    
+
+userRouter.get('/logOut', UC.logOut)
+
 userRouter.get('/home', UC.home)
+
+userRouter.get('/updateProfile', UC.editProfile)
+
+userRouter.post('/updateProfile',
+    validate(UV.updateValidation),
+    UC.updateProfile)
 
 
 

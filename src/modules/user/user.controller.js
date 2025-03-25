@@ -72,7 +72,6 @@ export const home = async (req, res, next) => {
             fullUrl = `${protocol}://${host}/message/`;
         else {
             fullUrl = `${protocol}://${host}:${port}/message/`;
-
         }
 
         if (req.session.loggedIn)
@@ -81,10 +80,76 @@ export const home = async (req, res, next) => {
             return res.render("login", { error })
 
     } catch (error) {
-        return res.render("signup", { error: "Something went wrong" });
+        return res.render("logIn", { error: "Please LogIn again" });
     }
 }
 
 
+export const editProfile = async (req, res, next) => {
+    try {
+        const error = req.query.error
+        const user = await userModel.findById(req.session.userId)
+        return res.render("editProfile", { error, user });
+    } catch (error) {
+        return res.render("signup", { error: "Something went wrong" });
+
+    }
+}
 
 
+export const updateProfile = async (req, res, next) => {
+    try {
+        let { name, email, password } = req.body;
+        const user = await userModel.findById(req.session.userId);
+
+        if (!user) {
+            return res.render("editProfile", { error: "User not found", user: {} });
+        }
+
+        let isUpdated = false;
+
+        if (name && name !== user.name) {
+            isUpdated = true;
+            user.name = name;
+        }
+
+        if (email && email !== user.email) {
+            const existingUser = await userModel.findOne({ email });
+            if (existingUser && existingUser._id.toString() !== user._id.toString()) {
+                return res.render("editProfile", { error: "Email already in use", user });
+            }
+            isUpdated = true;
+            user.email = email;
+        }
+
+        if (password && !bcrypt.compareSync(password, user.password)) {
+            isUpdated = true;
+            user.password = bcrypt.hashSync(password, +process.env.SALT_ROUNDS);
+        }
+
+        if (!isUpdated) {
+            return res.render("editProfile", { error: "Change something to update", user });
+        }
+
+        await user.save();
+        return res.redirect('/home')
+
+    } catch (error) {
+        return res.render("editProfile", { error: "Something went wrong", user: {} });
+    }
+};
+
+
+
+export const logOut = async (req, res, next) => {
+    try {
+
+        req.session.destroy((err) => {
+            res.clearCookie("connect.sid"); 
+            return res.render("logIn", { error: "Logged out successfully" });
+        });
+
+    } catch (error) {
+        return res.render("signup", { error: "Something went wrong" });
+    }
+}
