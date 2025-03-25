@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Saraha</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        fadeIn: "fadeIn 1s ease-out",
+                        slideUp: "slideUp 0.5s ease-out",
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            "0%": { opacity: 0 },
+                            "100%": { opacity: 1 },
+                        },
+                        slideUp: {
+                            "0%": { transform: "translateY(20px)", opacity: 0 },
+                            "100%": { transform: "translateY(0)", opacity: 1 },
+                        },
+                    },
+                    boxShadow: {
+                        'deep': '0px 10px 30px rgba(0, 0, 0, 0.2)',
+                    }
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 to-purple-600 px-4">
+
+    <!-- Login Container -->
+    <div class="w-full max-w-lg p-10 bg-white rounded-3xl shadow-deep animate-fadeIn">
+        <!-- Logo -->
+        <div class="flex justify-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/295/295128.png" alt="Saraha Logo" class="w-20 mb-4">
+        </div>
+
+        <!-- Login Form -->
+        <% if (error) { %>
+            <div id="error-alert" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+                <strong class="font-bold">Oops! </strong>
+                <span class="block sm:inline"><%= error %></span>
+            </div>
+    
+            <script>
+                // Remove the error message after 5 seconds
+                setTimeout(() => {
+                    const errorAlert = document.getElementById("error-alert");
+                    if (errorAlert) {
+                        errorAlert.style.opacity = "0";  // Fade out effect
+                        setTimeout(() => errorAlert.remove(), 500); // Remove from DOM
+                    }
+                }, 5000);
+            </script>
+        <% } %>
+        <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-6 animate-slideUp">Welcome to Saraha</h2>
+        <form class="animate-slideUp space-y-6" method="POST" action="/login">
+            <div>
+                <label class="block text-gray-700 font-semibold text-lg">Email</label>
+                <input type="email" placeholder="Enter your email"
+                    class="w-full px-5 py-4 mt-2 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 bg-gray-50 shadow-sm" name="email">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold text-lg">Password</label>
+                <input type="password" placeholder="Enter your password"
+                    class="w-full px-5 py-4 mt-2 text-lg border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 bg-gray-50 shadow-sm" name="password">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-indigo-500 text-white py-4 rounded-xl font-semibold text-xl hover:bg-indigo-600 transition-transform duration-300 hover:scale-105 shadow-lg">
+                Login
+            </button>
+
+            <p class="text-center text-gray-600 text-lg mt-4">Don't have an account?
+                <a href="/" class="text-indigo-500 hover:underline font-semibold">Sign up</a>
+            </p>
+        </form>
+    </div>
+
+    <!-- How to Use Section -->
+    <div class="w-full max-w-lg mt-10 p-8 bg-white rounded-3xl shadow-deep animate-slideUp">
+        <h3 class="text-2xl font-bold text-gray-800 mb-5 text-center">🔹 How to Use Saraha</h3>
+        <ul class="space-y-5 text-gray-700 text-lg">
+            <li class="flex items-center space-x-4">
+                <span class="text-indigo-500 text-2xl">💌</span>
+                <span><strong>Receive Anonymous Messages:</strong> Share your profile link and get anonymous messages.</span>
+            </li>
+            <li class="flex items-center space-x-4">
+                <span class="text-indigo-500 text-2xl">✉️</span>
+                <span><strong>Send Messages:</strong> Send anonymous messages to your friends.</span>
+            </li>
+            <li class="flex items-center space-x-4">
+                <span class="text-indigo-500 text-2xl">📝</span>
+                <span><strong>Manage Messages:</strong> View, delete, and manage your inbox.</span>
+            </li>
+            <li class="flex items-center space-x-4">
+                <span class="text-indigo-500 text-2xl">🔒</span>
+                <span><strong>Privacy First:</strong> Your identity remains hidden while sending messages.</span>
+            </li>
+            <li class="flex items-center space-x-4">
+                <span class="text-indigo-500 text-2xl">🎉</span>
+                <span><strong>Have Fun:</strong> Engage with your friends in an exciting way!</span>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>
