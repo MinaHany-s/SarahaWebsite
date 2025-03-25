@@ -67,7 +67,13 @@ export const home = async (req, res, next) => {
         const protocol = req.protocol; // 'http' or 'https'
         const host = req.hostname; // 'localhost' if running locally
         const port = req.connection.localPort; // Port number (e.g., 3000)
-        const fullUrl = `${protocol}://${host}:${port}/message/`;
+        let fullUrl
+        if (port != 3000)
+            fullUrl = `${protocol}://${host}/message/`;
+        else {
+            fullUrl = `${protocol}://${host}:${port}/message/`;
+
+        }
 
         if (req.session.loggedIn)
             return res.render("home", { error, user, message, fullUrl })
