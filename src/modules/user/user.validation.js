@@ -1,8 +1,8 @@
 import joi from 'joi';
 
 export const signUpValidation = {
-    body: Joi.object({
-        userName: Joi.string()
+    body: joi.object({
+        userName: joi.string()
             .min(3)
             .max(20)
             .trim()
@@ -18,7 +18,7 @@ export const signUpValidation = {
                 "string.pattern.base": "Username can only contain English letters, numbers, underscores, and spaces."
             }),
 
-        email: Joi.string()
+        email: joi.string()
             .email()
             .pattern(/^[a-zA-Z0-9._%+-]+@gmail\.com$/)
             .required()
@@ -30,7 +30,7 @@ export const signUpValidation = {
                 "string.base": "Email must be a string."
             }),
 
-        password: Joi.string()
+        password: joi.string()
             .min(6)
             .max(30)
             .pattern(/^(?=.*[A-Za-z])(?=.*\d).+$/) // Requires at least one letter and one number
@@ -44,8 +44,8 @@ export const signUpValidation = {
                 "string.base": "Password must be a string."
             }),
 
-        cPassword: Joi.string()
-            .valid(Joi.ref("password"))
+        cPassword: joi.string()
+            .valid(joi.ref("password"))
             .required()
             .messages({
                 "any.required": "Confirm password is required.",
