@@ -149,14 +149,15 @@ export const updateProfile = async (req, res, next) => {
 
 export const logOut = async (req, res, next) => {
     try {
-
         req.session.destroy((err) => {
+            if (err) {
+                return res.render("login", { error: "Something went wrong while logging out" });
+            }
             res.clearCookie("connect.sid");
+            return res.render("login", { error: "Logged out successfully" });
         });
-        return res.render("login", { error: "Logged out successfully" });
-
-
     } catch (error) {
-        return res.render("signup", { error: "Something went wrong" });
+        return res.render("login", { error: "Something went wrong" });
     }
-}
+};
+
