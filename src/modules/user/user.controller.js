@@ -146,8 +146,9 @@ export const logOut = async (req, res, next) => {
 
         req.session.destroy((err) => {
             res.clearCookie("connect.sid"); 
-            return res.render("logIn", { error: "Logged out successfully" });
         });
+        return res.render("login", { error: "Logged out successfully" });
+
 
     } catch (error) {
         return res.render("signup", { error: "Something went wrong" });
