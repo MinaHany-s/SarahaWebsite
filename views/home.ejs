@@ -31,10 +31,9 @@
         };
     </script>
 </head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 px-4">
 
-<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 px-4">
-
-    <div class="w-full max-w-2xl p-6 bg-white rounded-2xl shadow-xl animate-fadeIn">
+    <div class="w-full max-w-2xl p-6 bg-white rounded-2xl shadow-xl animate-fadeIn mt-20">
         <!-- Profile Header -->
         <div class="text-center mb-6">
             <h2 class="text-3xl font-bold text-gray-800">
@@ -44,7 +43,6 @@
                 <%= user.email %>
             </p>
         </div>
-
 
         <% for( let i=0; i < message.length; i++ ) { %>
             <div
@@ -56,70 +54,59 @@
                     📅 Received:
                     <script>document.write(moment("<%= message[i].createdAt %>").fromNow());</script>
                 </span>
-
-
             </div>
-            <% } %>
+        <% } %>
 
+        <!-- Share Profile Link -->
+        <div class="mt-6 text-center animate-slideUp">
+            <p class="text-gray-600">🔗 Share your profile link:</p>
+            <div class="flex items-center justify-between bg-gray-100 px-4 py-2 mt-2 rounded-lg">
+                <span class="text-gray-700 text-sm truncate">
+                    <a id="profile-link" href="<%= fullUrl %><%= user._id %>">
+                        ✨ Copy your profile link and share it with friends! ✨
+                    </a>
+                </span>
+                <button id="copy-btn" class="text-blue-500 font-semibold hover:underline">Copy</button>
+                <span id="copy-confirmation"
+                    class="text-green-500 text-sm ml-4 opacity-0 transition-opacity duration-300">Copied!</span>
+            </div>
+        </div>
 
+        <script>
+            document.getElementById('copy-btn').addEventListener('click', function () {
+                const link = document.getElementById('profile-link').href;
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = link;
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                const confirmation = document.getElementById('copy-confirmation');
+                confirmation.classList.remove('opacity-0');
+                confirmation.classList.add('opacity-100');
+                setTimeout(() => {
+                    confirmation.classList.remove('opacity-100');
+                    confirmation.classList.add('opacity-0');
+                }, 2000);
+            });
+        </script>
 
-                <!-- Share Profile Link -->
-                <div class="mt-6 text-center animate-slideUp">
-                    <p class="text-gray-600">🔗 Share your profile link:</p>
-                    <div class="flex items-center justify-between bg-gray-100 px-4 py-2 mt-2 rounded-lg">
-                        <span class="text-gray-700 text-sm truncate">
-                            <a id="profile-link" href="<%= fullUrl %><%= user._id %>">
-                                ✨ Copy your profile link and share it with friends! ✨
-                            </a>
-                        </span>
-                        <button id="copy-btn" class="text-blue-500 font-semibold hover:underline">Copy</button>
-                        <span id="copy-confirmation"
-                            class="text-green-500 text-sm ml-4 opacity-0 transition-opacity duration-300">Copied!</span>
-                    </div>
-                </div>
+        <!-- Settings -->
+        <div class="mt-6 bg-gray-100 p-5 rounded-xl shadow-md animate-slideUp">
+            <h3 class="text-xl font-semibold text-gray-700 mb-3">Settings</h3>
+            <a href="/updateProfile"
+                class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-transform duration-300 hover:scale-105 shadow-md block text-center">
+                ✏️ Edit Profile</a>
 
-                <script>
-                    document.getElementById('copy-btn').addEventListener('click', function () {
-                        const link = document.getElementById('profile-link').href;
-
-                        // Create a temporary input element to select the link text
-                        const tempInput = document.createElement('input');
-                        document.body.appendChild(tempInput);
-                        tempInput.value = link;
-                        tempInput.select();
-                        document.execCommand('copy'); // Execute the copy command
-
-                        // Remove the temporary input element
-                        document.body.removeChild(tempInput);
-
-                        // Show the "Copied!" message
-                        const confirmation = document.getElementById('copy-confirmation');
-                        confirmation.classList.remove('opacity-0'); // Make it visible
-                        confirmation.classList.add('opacity-100'); // Full opacity
-
-                        // Hide the "Copied!" message after 2 seconds
-                        setTimeout(() => {
-                            confirmation.classList.remove('opacity-100'); // Hide the message
-                            confirmation.classList.add('opacity-0'); // Fade it out
-                        }, 2000);
-                    });
-                </script>
-
-
-                <!-- Settings -->
-                <div class="mt-6 bg-gray-100 p-5 rounded-xl shadow-md animate-slideUp">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-3">Settings</h3>
-                    <button
-                        class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition-transform duration-300 hover:scale-105 shadow-md">
-                        ✏️ Edit Profile
-                    </button>
-                    <button
-                        class="w-full bg-red-500 text-white py-2 mt-3 rounded-lg font-semibold hover:bg-red-600 transition-transform duration-300 hover:scale-105 shadow-md">
-                        🚪 Logout
-                    </button>
-                </div>
+            <a href="/logOut" id="logoutLink"
+                class="w-full bg-red-500 text-white py-2 mt-3 rounded-lg font-semibold hover:bg-red-600 transition-transform duration-300 hover:scale-105 shadow-md block text-center py-2">
+                🚪 Logout
+            </a>
+        </div>
     </div>
 
-</body>
+    <!-- Include Footer -->
+    <%- include('footer.ejs') %>
 
+</body>
 </html>
