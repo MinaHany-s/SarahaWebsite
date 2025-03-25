@@ -5,12 +5,19 @@ import dotenv from 'dotenv';
 import session from "express-session";
 import MongoDBStoreFactory from "connect-mongodb-session";
 import messageRouter from './src/modules/messages/message.routes.js';
+import path from "path";
 
 const MongoDBStore = MongoDBStoreFactory(session);
-
-
-
 const app = express()
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
 const port = 3000
 
 var store = new MongoDBStore({

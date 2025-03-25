@@ -1,13 +1,12 @@
 import messageModel from "../../../db/models/message.model.js"
 import userModel from "../../../db/models/user.model.js"
 import bcrypt from 'bcrypt'
-import moment from 'moment';
 
 
 export const SignUp = async (req, res, next) => {
     try {
         const { error } = req.query
-        return res.render("signUp.ejs", { error })
+        return res.render("signUp", { error })
     } catch (error) {
         return res.render("signup", { error: "Something went wrong" });
     }
@@ -35,7 +34,7 @@ export const handleSignUp = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
         const { error } = req.query
-        return res.render("login.ejs", { error })
+        return res.render("login", { error })
     } catch (error) {
         return res.render("signup", { error: "Something went wrong" });
     }
@@ -71,7 +70,7 @@ export const home = async (req, res, next) => {
         const fullUrl = `${protocol}://${host}:${port}/message/`;
 
         if (req.session.loggedIn)
-            return res.render("home.ejs", { error, user, message, fullUrl })
+            return res.render("home", { error, user, message, fullUrl })
         else
             return res.render("login", { error })
 

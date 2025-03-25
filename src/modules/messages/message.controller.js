@@ -31,7 +31,7 @@ export const messageSent = async (req, res, next) => {
             content,
             to: userExists,
         })
-        return res.render("messageSent.ejs");
+        return res.render("messageSent");
 
     } catch (error) {
         console.log(error)
