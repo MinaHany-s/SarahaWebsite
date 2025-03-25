@@ -41,7 +41,10 @@ app.use(express.static("public"))
 
 app.use('/message', messageRouter)
 app.use('/', userRouter)
+app.use('*', (req, res, next) => {
+    res.render('errorrs')
 
+})
 app.set("view engine", "ejs");
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
