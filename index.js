@@ -14,7 +14,7 @@ const app = express()
 const port = 3000
 
 var store = new MongoDBStore({
-    uri: process.env.URI_LOCAL,
+    uri: process.env.DATABASE_URL_ONLINE,
     collection: 'mySessions'
 });
 
