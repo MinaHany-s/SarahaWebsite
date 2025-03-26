@@ -20,6 +20,9 @@ export const SignUp = async (req, res, next) => {
 export const handleSignUp = async (req, res, next) => {
     try {
         const { userName, email, password, cPassword } = req.body
+        if (password !== cPassword) {
+            return res.redirect("/signup?error=Passwords do not match");
+        }
         const userExists = await userModel.findOne({ email })
         if (userExists) {
             return res.redirect("/?error=Email already exists. Try Login or resetting your password .");
