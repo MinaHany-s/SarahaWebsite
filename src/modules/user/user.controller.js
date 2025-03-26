@@ -68,7 +68,6 @@ export const home = async (req, res, next) => {
     try {
         const { error } = req.query
         const user = await userModel.findById(req.session.userId)
-
         const message = await messageModel.find({ to: user._id })
         const protocol = req.protocol; // 'http' or 'https'
         const host = req.hostname; // 'localhost' if running locally
@@ -86,7 +85,7 @@ export const home = async (req, res, next) => {
             return res.render("login", { error })
 
     } catch (error) {
-        return res.render("logIn", { error: "Please LogIn again" });
+        return res.render("login", { error: "Please LogIn again" });
     }
 }
 
