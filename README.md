@@ -44,7 +44,7 @@ Saraha allows users to **send anonymous messages**, **edit profiles**, and manag
    ```sh
    DATABASE_URL_ONLINE=<your-mongodb-connection-string>
    URI_LOCAL=mongodb://127.0.0.1:27017/SarahaDb
-   SALT_ROUNDS=8
+   SALT_ROUNDS=<Your salt rounds> 5 for example
    SESSION_SECRET=<your-session-secret>
    ```
 4. Start the server:
